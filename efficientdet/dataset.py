@@ -54,7 +54,8 @@ class CocoDataset(Dataset):
         for _ in range(10):
             if os.path.isfile(path):
                 break
-            sleep(0.1)    
+            path = path.replace('train2017', 'val2017')
+            sleep(0.1)                
         img = cv2.imread(path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
