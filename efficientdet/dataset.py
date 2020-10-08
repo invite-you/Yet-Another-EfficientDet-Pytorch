@@ -8,6 +8,9 @@ import cv2
 
 from time import sleep
 
+import imgaug as ia
+import imgaug.augmenters as iaa
+
 class CocoDataset(Dataset):
     def __init__(self, root_dir, set='train2017', transform=None):
 
@@ -112,6 +115,34 @@ def collater(data):
     imgs = imgs.permute(0, 3, 1, 2)
 
     return {'img': imgs, 'annot': annot_padded, 'scale': scales}
+
+
+class Coustom_augment(object):
+    def __init__(self):
+        self.seq = iaa.Sequential([
+                          iaa.Rot90([1,2,3,4]),
+                          iaa.Fliplr(0.5),
+                          iaa.Flipud(0.5),
+                          iaa.GammaContrast((0, 2.0))
+                                 ])
+
+    def __call__(self, sample):
+        image, annots = sample['img'], sample['annot']
+        bboxes = []
+        for annot in annots[:, :4]:
+            x1, y1, x2, y2 = annot
+            bboxes.append( ia.BoundingBox(x1=x1, y1=y1, x2=x2, y2=y2) )
+
+        image_aug, bbs_aug = seq(images=[image], bounding_boxes=[bboxes])
+        image_aug, bbs_aug = image_aug[0], bbs_aug[0]
+
+        mbboxes = np.array([])
+        for mb in bbs_aug:
+            mbx = np.array([ mb.x1, mb.y1, mb.x2, mb.y2)]
+            mbboxes = np.vstack((mbboxes, mbx))
+
+        annots[:, :4] = mbboxes
+        return {'img': image_aug, 'annot': annots}
 
 
 class Resizer(object):
