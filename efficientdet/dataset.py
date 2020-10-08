@@ -54,7 +54,7 @@ class CocoDataset(Dataset):
         image_info = self.coco.loadImgs(self.image_ids[image_index])[0]
         path = os.path.join(self.root_dir, self.set_name, image_info['file_name'])
         # for colab. colab is slow to get file in google drive 
-        print(path)
+        
         for _ in range(10):
             if os.path.isfile(path):
                 break
