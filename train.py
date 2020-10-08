@@ -111,7 +111,8 @@ def train(opt):
 
     input_sizes = [512, 640, 768, 896, 1024, 1280, 1280, 1536, 1536]
     training_set = CocoDataset(root_dir=os.path.join(opt.data_path, params.project_name), set=params.train_set,
-                               transform=transforms.Compose([Coustom_augment(),   Normalizer(mean=params.mean, std=params.std),
+                               transform=transforms.Compose([#Coustom_augment(),  
+                                                             Normalizer(mean=params.mean, std=params.std),
                                                              Augmenter(),
                                                              transforms.RandomHorizontalFlip(),
                                                              transforms.RandomVerticalFlip(),                                                                       
@@ -119,7 +120,8 @@ def train(opt):
     training_generator = DataLoader(training_set, **training_params)
 
     val_set = CocoDataset(root_dir=os.path.join(opt.data_path, params.project_name), set=params.val_set,
-                          transform=transforms.Compose([ Coustom_augment(), Normalizer(mean=params.mean, std=params.std),
+                          transform=transforms.Compose([ #Coustom_augment(), 
+                                                         Normalizer(mean=params.mean, std=params.std),
                                                         Resizer(input_sizes[opt.compound_coef])]))
     val_generator = DataLoader(val_set, **val_params)
 
