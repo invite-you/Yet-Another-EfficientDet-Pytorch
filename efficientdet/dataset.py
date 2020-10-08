@@ -139,7 +139,10 @@ class Coustom_augment(object):
         mbboxes = np.array([])
         for mb in bbs_aug:
             mbx = np.array([ mb.x1, mb.y1, mb.x2, mb.y2])
-            mbboxes = np.vstack((mbboxes, mbx))
+            if not mbboxes.any():
+               mbboxes = mbx
+            else:
+               mbboxes = np.vstack((mbboxes, mbx))
 
         annots[:, :4] = mbboxes
         return {'img': image_aug, 'annot': annots}
