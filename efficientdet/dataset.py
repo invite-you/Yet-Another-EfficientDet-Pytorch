@@ -133,7 +133,7 @@ class Coustom_augment(object):
             x1, y1, x2, y2 = annot
             bboxes.append( ia.BoundingBox(x1=x1, y1=y1, x2=x2, y2=y2) )
 
-        image_aug, bbs_aug = seq(images=[image], bounding_boxes=[bboxes])
+        image_aug, bbs_aug = self.seq(images=[image], bounding_boxes=[bboxes])
         image_aug, bbs_aug = image_aug[0], bbs_aug[0]
 
         mbboxes = np.array([])
