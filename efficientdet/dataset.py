@@ -135,9 +135,11 @@ class Coustom_augment(object):
         for annot in annots[:, :4]:
             x1, y1, x2, y2 = annot
             bboxes.append( ia.BoundingBox(x1=x1, y1=y1, x2=x2, y2=y2) )
-
+            
+        image_aug = image_aug * 255
         image_aug, bbs_aug = self.seq(images=[image], bounding_boxes=[bboxes])
         image_aug, bbs_aug = image_aug[0], bbs_aug[0]
+        image_aug = image_aug / 255
         image_aug = image_aug.astype(np.uint8)
         
         mbboxes = np.array([])
