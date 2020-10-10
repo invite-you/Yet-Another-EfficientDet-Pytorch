@@ -138,7 +138,8 @@ class Coustom_augment(object):
 
         image_aug, bbs_aug = self.seq(images=[image], bounding_boxes=[bboxes])
         image_aug, bbs_aug = image_aug[0], bbs_aug[0]
-
+        image_aug.astype(np.uint8)
+        
         mbboxes = np.array([])
         for mb in bbs_aug:
             mbx = np.array([ mb.x1, mb.y1, mb.x2, mb.y2])
