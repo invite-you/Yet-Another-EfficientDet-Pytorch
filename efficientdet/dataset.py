@@ -63,7 +63,7 @@ class CocoDataset(Dataset):
         img = cv2.imread(path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-        return img.astype(np.float32) / 255.
+        return img#.astype(np.float32) / 255.
 
     def load_annotations(self, image_index):
         # get ground truth annotations
@@ -136,11 +136,11 @@ class Coustom_augment(object):
             x1, y1, x2, y2 = annot
             bboxes.append( ia.BoundingBox(x1=x1, y1=y1, x2=x2, y2=y2) )
             
-        image_aug = image_aug * 255
+        #image_aug = image_aug * 255
         image_aug, bbs_aug = self.seq(images=[image], bounding_boxes=[bboxes])
         image_aug, bbs_aug = image_aug[0], bbs_aug[0]
-        image_aug = image_aug / 255
-        image_aug = image_aug.astype(np.uint8)
+        #image_aug = image_aug / 255
+        #image_aug = image_aug.astype(np.uint8)
         
         mbboxes = np.array([])
         for mb in bbs_aug:
@@ -151,7 +151,7 @@ class Coustom_augment(object):
                mbboxes = np.vstack((mbboxes, mbx))
 
         annots[:, :4] = mbboxes
-        return {'img': image_aug, 'annot': annots}
+        return {'img': image_aug.astype(np.float32) / 255. , 'annot': annots}
 
 
 class Resizer(object):
