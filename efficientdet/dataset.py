@@ -153,6 +153,42 @@ class Coustom_augment(object):
         annots[:, :4] = mbboxes
         return {'img': image_aug.astype(np.float32) / 255. , 'annot': annots}
 
+    
+class Coustom_augment_val(object):
+    def __init__(self):
+        self.seq = iaa.Sequential([
+                          iaa.Rot90([1,2,3,4]),
+                          iaa.Fliplr(0.5),
+                          iaa.Flipud(0.5),
+                          #iaa.GammaContrast((0, 2.0))
+                          #iaa.MultiplyHueAndSaturation((0.5, 1.5), per_channel=True),
+                          #iaa.MultiplyAndAddToBrightness(mul=(0.5, 1.5), add=(-30, 30)),            
+                                 ])
+
+    def __call__(self, sample):
+        image, annots = sample['img'], sample['annot']
+        bboxes = []
+        for annot in annots[:, :4]:
+            x1, y1, x2, y2 = annot
+            bboxes.append( ia.BoundingBox(x1=x1, y1=y1, x2=x2, y2=y2) )
+            
+        #image_aug = image_aug * 255
+        image_aug, bbs_aug = self.seq(images=[image], bounding_boxes=[bboxes])
+        image_aug, bbs_aug = image_aug[0], bbs_aug[0]
+        #image_aug = image_aug / 255
+        #image_aug = image_aug.astype(np.uint8)
+        
+        mbboxes = np.array([])
+        for mb in bbs_aug:
+            mbx = np.array([ mb.x1, mb.y1, mb.x2, mb.y2])
+            if not mbboxes.any():
+               mbboxes = mbx
+            else:
+               mbboxes = np.vstack((mbboxes, mbx))
+
+        annots[:, :4] = mbboxes
+        return {'img': image_aug.astype(np.float32) / 255. , 'annot': annots}
+
 
 class Resizer(object):
     """Convert ndarrays in sample to Tensors."""
