@@ -161,8 +161,8 @@ class Coustom_augment_val(object):
                           iaa.Fliplr(0.5),
                           iaa.Flipud(0.5),
                           iaa.GammaContrast((0, 2.0))
-                          #iaa.MultiplyHueAndSaturation((0.5, 1.5), per_channel=True),
-                          #iaa.MultiplyAndAddToBrightness(mul=(0.5, 1.5), add=(-30, 30)),            
+                          iaa.MultiplyHueAndSaturation((0.5, 1.5), per_channel=True),
+                          iaa.MultiplyAndAddToBrightness(mul=(0.5, 1.5), add=(-30, 30)),            
                                  ])
 
     def __call__(self, sample):
