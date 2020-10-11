@@ -126,7 +126,8 @@ class Coustom_augment(object):
                           iaa.Flipud(0.5),
                           iaa.GammaContrast((0, 2.0)),
                           iaa.MultiplyHueAndSaturation((0.5, 1.5), per_channel=True),
-                          iaa.MultiplyAndAddToBrightness(mul=(0.5, 1.5), add=(-30, 30)),            
+                          iaa.MultiplyAndAddToBrightness(mul=(0.5, 1.5), add=(-30, 30)),   
+                          iaa.CLAHE()
                                  ])
 
     def __call__(self, sample):
