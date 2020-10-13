@@ -1,0 +1,20 @@
+project_name: coco_all  # also the folder name of the dataset that under data_path folder
+train_set: val2017
+val_set: val2017
+num_gpus: 1
+
+# mean and std in RGB order, actually this part should remain unchanged as long as your dataset is similar to coco.
+# 찐 계산 값 앞으로는 이거 쓰는 걸로 (train, test 전부 계산)
+mean: [0.222, 0.219, 0.211]
+std: [0.147, 0.144, 0.138]
+
+
+# this is coco anchors, change it if necessary
+anchors_scales: '[2 ** 0, 2 ** (1.0 / 3.0), 2]'                
+anchors_ratios: '[(1.0, 1.0), (1.4, 0.7), (0.7, 1.4)]'
+
+# must match your dataset's category_id.
+# category_id is one_indexed,
+# for example, index of 'car' here is 2, while category_id of is 3
+obj_list: ['small ship',  'large ship', 'civilian aircraft', 'military aircraft', 'small car', 
+               'bus', 'truck', 'train', 'crane', 'bridge', 'oil tank', 'dam', 'athletic field', 'helipad', 'roundabout']
