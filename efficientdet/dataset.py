@@ -162,7 +162,7 @@ class Coustom_augment_val(object):
                           iaa.Rot90([1,2,3,4]),
                           iaa.Fliplr(0.5),
                           iaa.Flipud(0.5),
-                          iaa.Rotate((-90,90))
+                          iaa.Rotate((-90,90)),
                           #iaa.GammaContrast((0, 2.0)),
                           #iaa.MultiplyHueAndSaturation((0.5, 1.5), per_channel=True),
                           iaa.MultiplyAndAddToBrightness(mul=(0.5, 1.5), add=(-10, 10)),            
