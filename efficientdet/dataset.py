@@ -121,10 +121,11 @@ def collater(data):
 class Coustom_augment(object):
     def __init__(self):
         self.seq = iaa.Sequential([
-                          iaa.Rot90([1,2,3,4]),
-                          iaa.Rotate((-90,90)),
+                          #iaa.Rot90([1,2,3,4]),
+                          #iaa.Rotate((-90,90)),
                           iaa.Fliplr(0.5),
                           iaa.Flipud(0.5),
+                          iaa.Affine(scale=(0.5, 1.5), rotate=(-380, 380), translate_percent={'x': (-0.2, 0.2), 'y': (-0.2, 0.2)}, mode=['symmetric', 'reflect'], cval=(0,255)),
                           #iaa.GammaContrast((0, 2.0)),
                           #iaa.MultiplyHueAndSaturation((0.5, 1.5), per_channel=True),
                           iaa.MultiplyAndAddToBrightness(mul=(0.5, 1.5), add=(-10, 10)),   
@@ -159,10 +160,11 @@ class Coustom_augment(object):
 class Coustom_augment_val(object):
     def __init__(self):
         self.seq = iaa.Sequential([
-                          iaa.Rot90([1,2,3,4]),
+                          #iaa.Rot90([1,2,3,4]),
                           iaa.Fliplr(0.5),
                           iaa.Flipud(0.5),
-                          iaa.Rotate((-90,90)),
+                          iaa.Affine(scale=(0.5, 1.5), rotate=(-380, 380), translate_percent={'x': (-0.2, 0.2), 'y': (-0.2, 0.2)}, mode=['symmetric', 'reflect'], cval=(0,255)),               
+                          #iaa.Rotate((-90,90)),
                           #iaa.GammaContrast((0, 2.0)),
                           #iaa.MultiplyHueAndSaturation((0.5, 1.5), per_channel=True),
                           iaa.MultiplyAndAddToBrightness(mul=(0.5, 1.5), add=(-10, 10)),            
